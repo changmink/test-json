@@ -10,6 +10,6 @@ if (1 < queryString.length && 1 < queryString[1].split('=')) {
     reader.addEventListener("load", function(event) {
         alert(event.target.result);
     });
-    reader.readAsText(filename);
+    reader.readAsDataURL(filename);
 }
 </script>
