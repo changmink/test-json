@@ -6,5 +6,10 @@ if (1 < queryString.length && 1 < queryString[1].split('=')) {
     var key = queryString[1].split('=')[0]
     var value = queryString[1].split('=')[1]
     var filename = value + ".json"
+    var reader = new FileReader();
+    reader.addEventListener("load", function(event) {
+        alert(event.target.result);
+    });
+    reader.readAsText(filename);
 }
 </script>
