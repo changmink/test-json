@@ -7,9 +7,13 @@ if (1 < queryString.length && 1 < queryString[1].split('=')) {
     var value = queryString[1].split('=')[1]
     var filename = value + ".json"
     var reader = new FileReader();
-    reader.addEventListener("load", function(event) {
+    reader.onload = function(event) {
+        console.log('load');
         alert(event.target.result);
-    });
+    };
+    reader.onerror = function(event) {
+        console.error(event.target.error);
+    }
     reader.readAsDataURL(filename);
 }
 </script>
