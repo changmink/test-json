@@ -1,7 +1,10 @@
 <script>
 var href = window.location.href;
 var queryString = href.split('?');
-if(1 < queryString.length) {
-    alert(queryString[1]);
+
+if (1 < queryString.length && 1 < queryString.split('=')) {
+    var key = queryString.split('=')[0]
+    var value = queryString.split('=')[1]
+    var filename = value + ".json"
 }
 </script>
