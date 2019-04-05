@@ -1,19 +1,53 @@
-<script>
-var href = window.location.href;
-var queryString = href.split('?');
-console.log(queryString[0]);
-if (1 < queryString.length && 1 < queryString[1].split('=')) {
-    var key = queryString[1].split('=')[0]
-    var value = queryString[1].split('=')[1]
-    var filename = value + ".json"
-    var reader = new FileReader();
-    reader.onload = function(event) {
-        console.log('load');
-        alert(event.target.result);
-    };
-    reader.onerror = function(event) {
-        console.error(event.target.error);
-    }
-    reader.readAsDataURL(filename);
-}
-</script>
+
+<html>
+    <head>
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+        </script>
+    </head>
+    <body>
+        <h1 id="header"></h1>
+        <h2 id="introduce"></h2>
+        <div id="intro"></div>
+        <h2 id="talk"></h2>
+        <div id="talking"></div>
+        <script>
+            var header = document.getElementById("header");
+            var href = window.location.href;
+            var queryString = href.split('?');
+    
+            if (1 < queryString.length) {
+                var splited = queryString[1].split('=');
+                if (1 < splited.length) {
+                    var key = splited[0];
+                    var value = splited[1];
+                    var filename = value + ".json";
+                    
+                    $.getJSON(filename, function(json) {
+                        if(json["name"]){
+                            header.innerText = json["name"];
+                            introduce.innerText = "소개"
+                            var intro = document.getElementById("intro");
+                            intro.innerText = json["introduce"];
+                            var talk = document.getElementById("talk");
+                            talk.innerText = "하고 싶은 말";
+                            var talking = document.getElementById("talking");
+                            talking.innerText = json["talk"];
+                        } else {
+                            header.innerText = "제대로된 쿼리를 제공해주세요(?name=이름)";
+                        }
+                    }).fail(function(){
+                        header.innerText = "자기소개가 없어요.";
+                    });
+                } else {
+                    header.innerText = "제대로된 쿼리를 제공해주세요(?name=이름)";
+                }
+            }else{
+                header.innerText = "제대로된 쿼리를 제공해주세요(?name=이름)";
+            }
+        </script>
+    </body>
+</html>
+
